@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Profiel</title>
+</head>
+<body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script async src="js/flexi_scrum_2.1.0.min.js"></script>
+<script defer>
+    window.onload = function () {
+		//localStorage.removeItem('flexidata');
+		//scrumlib.reset();
+        console.log(scrumlib.getAllDatasets());
+
+				//var maken met gelecteerd profielen
+				var selectedId = localStorage.getItem("id");
+			  var dataset = scrumlib.getDatasetById(selectedId);
+
+				console.log(dataset);
+
+				//ul uitbreiden met alle properties
+				var list = document.getElementById("elementList");
+
+				var dfLijst = document.createDocumentFragment(); //document fragment maken om alle li elementen in te steken
+
+				var listId = document.createElement("li");
+				listId.id = "id";
+				listId.innerHTML = "ID: " + dataset[0]._id;
+				dfLijst.appendChild(listId);
+
+				var listFamilienaam = document.createElement("li");
+				listFamilienaam.id = "familienaam";
+				listFamilienaam.innerHTML = "Familienaam: " + dataset[0].familienaam;
+				dfLijst.appendChild(listFamilienaam);
+
+				var listVoornaam = document.createElement("li");
+				listVoornaam.id = "voornaam";
+				listVoornaam.innerHTML = "Voornaam: " + dataset[0].voornaam;
+				dfLijst.appendChild(listVoornaam);
+
+				var listGeboortedatum = document.createElement("li");
+				listGeboortedatum.id = "geboortedatum";
+				listGeboortedatum.innerHTML = "Geboortedatum: " + dataset[0].geboortedatum;
+				dfLijst.appendChild(listGeboortedatum);
+
+				var listEmail = document.createElement("li");
+				listEmail.id = "email";
+				listEmail.innerHTML = "Email: " + dataset[0].email;
+				dfLijst.appendChild(listEmail);
+
+				var listNickname = document.createElement("li");
+				listNickname.id = "nickname";
+				listNickname.innerHTML = "Nickname: " + dataset[0].nickname;
+				dfLijst.appendChild(listNickname);
+
+				var listFoto = document.createElement("li");
+				listFoto.id = "foto";
+				listFoto.innerHTML = "Foto: ";
+				var img = document.createElement("img");
+				img.src = "flexidating/img/" + dataset[0].foto;
+				img.style.height = "100px";
+				img.style.width = "75px";
+				listFoto.appendChild(img);
+				dfLijst.appendChild(listFoto);
+
+				var listBeroep = document.createElement("li");
+				listBeroep.id = "beroep";
+				listBeroep.innerHTML = "Beroep: " + dataset[0].beroep;
+				dfLijst.appendChild(listBeroep);
+
+				var listSexe = document.createElement("li");
+				listSexe.id = "sexe";
+				listSexe.innerHTML = "Sexe: " + dataset[0].sexe;
+				dfLijst.appendChild(listSexe);
+
+				var listOogkleur = document.createElement("li");
+				listOogkleur.id = "oogkleur";
+				listOogkleur.innerHTML = "Oogkleur: " + dataset[0].oogkleur;
+				dfLijst.appendChild(listOogkleur);
+
+				var listHaarkleur = document.createElement("li");
+				listHaarkleur.id = "haarkleur";
+				listHaarkleur.innerHTML = "Haarkleur: " + dataset[0].haarkleur;
+				dfLijst.appendChild(listHaarkleur);
+
+				var listGewicht = document.createElement("li");
+				listGewicht.id = "gewicht";
+				listGewicht.innerHTML = "Gewicht: " + dataset[0].gewicht + " kg";
+				dfLijst.appendChild(listGewicht);
+
+				var listGrootte = document.createElement("li");
+				listGrootte.id = "grootte";
+				listGrootte.innerHTML = "Grootte: " + dataset[0].grootte + " cm";
+				dfLijst.appendChild(listGrootte);
+
+				var listWachtwoord = document.createElement("li");
+				listWachtwoord.id = "wachtwoord";
+				listWachtwoord.innerHTML = "Wachtwoord: " + dataset[0].wachtwoord;
+				dfLijst.appendChild(listWachtwoord);
+
+				list.appendChild(dfLijst);
+
+				//button search navigeren naar search.innerHTML
+				var buttonSearch = document.getElementById("search");
+				buttonSearch.addEventListener('click', function (){
+				  window.open ('search.html','_self',false);
+				})
+
+				//button edit navigeren naar editPage.html
+				var buttonEdit = document.getElementById("edit");
+				buttonEdit.addEventListener('click', function (){
+					window.open ('editPage.html', '_self', false);
+				})
+    }
+
+
+</script>
+<h1>Profiel</h1>
+<!--container om de controls in weer te geven-->
+<div id="controls">
+	<button id="search">Search partners</button>
+  <button id="edit">Edit</button>
+</div>
+
+<!--container om alle proofielelementen weer te geven-->
+<div id="elements">
+	<ul id="elementList">
+	</ul>
+</div>
+</body>
+</html>

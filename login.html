@@ -1,0 +1,69 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Flexi Dating Login Page</title>
+    <link href="css/api.css" rel="stylesheet"/>
+<style>
+
+</style>
+</head>
+<body>
+    <header>
+        <h1>Flexi Dating Login Page</h1>
+	</header>
+<div class="login">
+        <p><label>Login</label><input type="text" name="login_email" id="login_email" placeholder="email"><input type="text" name="login_pw" id="login_pw" placeholder="wachtwoord">
+           <button type=button id="login">Login</button>
+		   <button type=button id="clearHistory">Wis LocalStorage</button>
+		   <button type=button id="register">Registreer</button>
+        </p>
+</div>
+<div>
+		<p id="foutmelding">
+		</p>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script async src="js/flexi_scrum_2.1.0.min.js"></script>
+<script defer>
+	var loginKnop;
+	
+window.onload = function (){
+		//de knop
+		loginKnop = document.getElementById('login');
+		wisKnop = document.getElementById('clearHistory');
+		registerKnop = document.getElementById('register');
+		
+		//Velden
+		login_email = document.getElementById('login_email');
+        login_pw = document.getElementById('login_pw');
+		
+		
+		//Event listeners
+		loginKnop.addEventListener('click', function () {
+            //profiel pagina openen.
+			if (scrumlib.login(login_email.value,login_pw.value)){
+			console.log('login ok');
+			localStorage.setItem('id',scrumlib.login(login_email.value,login_pw.value));
+			window.open ('profile.html','_self',false)
+			}
+			else{
+			document.getElementById("foutmelding").innerHTML = "Verkeerde login/passwoord";
+			}
+            
+        })
+		
+		//wissen van local storage
+		wisKnop.addEventListener('click' , function (){
+			localStorage.clear();
+		})
+		
+		//register page
+		registerKnop.addEventListener('click', function (){
+			console.log('open register page');
+			//window.open('register.html','_self',false)
+		})
+		
+}
+</script>
+</body>
+</html>
