@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+</head>
+<body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script async src="js/flexi_scrum_2.1.0.min.js"></script>
+<script defer>
+    window.onload = function () {
+		//localStorage.removeItem('flexidata');
+		//scrumlib.reset();
+
+				var zoek_naam = document.getElementById('zoek_naam');
+				var zoek_haarkleur = document.getElementById('zoek_haarkleur');
+				var container = document.getElementById('container');
+				var users;
+        console.log(scrumlib.getAllDatasets());
+
+				btnNickname.addEventListener('click', function (e) {
+            //strict/fuzzy search voornaam
+            var fuzzy = document.getElementById('naam_fuzzy').checked;
+            //console.log(fuzzy);
+            var match = (fuzzy == true) ? "~" : "=";
+            var condition = {nickname: {"waarde": zoek_naam.value, "match": match}};
+            console.log(scrumlib.getDatasetsByConditions(condition));
+						users = scrumlib.getDatasetsByConditions(condition);
+						container.innerHTML = null;
+						generateList(users);
+        })
+
+				btnHaarkleur.addEventListener('click', function (e) {
+            //fuzzy search haarkleur
+            var condition = {haarkleur: {"waarde": zoek_haarkleur.value, "match": "~"}};
+            console.log(scrumlib.getDatasetsByConditions(condition));
+						users = scrumlib.getDatasetsByConditions(condition);
+						container.innerHTML = null;
+						generateList(users);
+        })
+
+				btnOogkleur.addEventListener('click', function (e) {
+            //fuzzy search haarkleur
+            var condition = {oogkleur: {"waarde": zoek_oogkleur.value, "match": "~"}};
+            console.log(scrumlib.getDatasetsByConditions(condition));
+						users = scrumlib.getDatasetsByConditions(condition);
+						container.innerHTML = null;
+						generateList(users);
+        })
+
+				btnSexe.addEventListener('click', function (e) {
+            //zoek op sexe
+            var zoek = zoek_sexe.value;
+            if (zoek == "") {
+                console.log(scrumlib.getAllDatasets());
+								users = scrumlib.getAllDatasets();
+								container.innerHTML = null;
+								generateList(users);
+            }
+            else {
+                var match = "=";
+                var condition = {sexe: {"waarde": zoek, "match": match}};
+                console.log(scrumlib.getDatasetsByConditions(condition));
+								users = scrumlib.getDatasetsByConditions(condition);
+								container.innerHTML = null;
+								generateList(users);
+            }
+        })
+
+				btnGrootte.addEventListener('click', function (e) {
+            //kleiner dan hoogte (cm)
+            var condition = {grootte: {"waarde": zoek_grootte.value, "match": "<"}};
+            console.log(scrumlib.getDatasetsByConditions(condition));
+						users = scrumlib.getDatasetsByConditions(condition);
+						container.innerHTML = null;
+						generateList(users);
+        })
+
+				btnGewicht.addEventListener('click', function (e) {
+            //kleiner dan hoogte (cm)
+            var condition = {gewicht: {"waarde": zoek_gewicht.value, "match": "<"}};
+            console.log(scrumlib.getDatasetsByConditions(condition));
+						users = scrumlib.getDatasetsByConditions(condition);
+						container.innerHTML = null;
+						generateList(users);
+        })
+    }
+
+		function generateList (users){
+				for (var i = 0; i < users.length; i++) {
+					var ul = document.createElement('ul');
+					var li = document.createElement("li");
+					li.innerHTML = users[i].voornaam + " " + users[i].familienaam + "<br>" + " " +
+					users[i].nickname;
+					ul.appendChild(li);
+					var foto = document.createElement('img');
+					foto.src = "flexidating/img/" + users[i].foto;
+					foto.width = 200;
+					var li1 = document.createElement('li');
+					li1.appendChild(foto);
+					ul.appendChild(li1);
+					container.appendChild(ul);
+				}
+			}
+</script>
+<h2>Welkom, gebruiker</h2>
+<p><label>zoek op nickname </label><input type="text" name="zoek_naam" id="zoek_naam">
+                    <label>Fuzzy search <input type="checkbox" name="naam_fuzzy" id="naam_fuzzy"></label>
+                    <button type=button id="btnNickname">zoek</button>
+</p>
+
+<p><label>zoek op haarkleur </label><input type="text" name="zoek_haarkleur" id="zoek_haarkleur">
+									<button type=button id="btnHaarkleur">zoek</button>
+</p>
+<p><label>zoek op oogkleur </label><input type="text" name="zoek_oogkleur" id="zoek_oogkleur">
+									<button type=button id="btnOogkleur">zoek</button>
+</p>
+<p><label>kies sexe </label><select name="zoek_sexe" id="zoek_sexe">
+                    <option value="" selected>beide sexes</option>
+                    <option>v</option>
+                    <option>m</option>
+                </select>
+                    <button type=button id="btnSexe">zoek</button>
+</p>
+<p><label>kleiner dan </label><input type="text" name="zoek_grootte" id="zoek_grootte"
+                                                     placeholder="grootte">
+                    <button type=button id="btnGrootte">zoek</button>
+</p>
+<p><label>maximum gewicht </label><input type="text" name="zoek_gewicht" id="zoek_gewicht"
+                                                     placeholder="gewicht">
+                    <button type=button id="btnGewicht">zoek</button>
+</p>
+<div id="container">
+	<p id="comment"></p>
+</div>
+</body>
+</html>

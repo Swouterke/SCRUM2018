@@ -1,0 +1,306 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Flexi Dating Register Page</title>
+    <link href="css/api.css" rel="stylesheet"/>
+<style>
+#fotoSelectie > h2{
+	text-align:center;
+	color:#00ff7f;
+}
+
+#fotoSelectie{
+	position:fixed;
+	left:0;
+	top:0;
+	z-index:10;
+	align:center;
+	width:80%;
+	height:80%;
+	margin:0;
+	padding:10% 10% 10% 10%;
+	border:0;
+	background:rgba(0,0,0,0.4);
+
+	overflow: hidden;
+}
+
+#fotoSelectie > a{
+	position: relative;
+	float:left;
+	padding-left: 20px;
+
+}
+
+form{
+	overflow: hidden;
+}
+
+div > p{
+	height: 1.5em;
+ }
+.left{
+	float:left;
+}
+.right{
+	float:left;
+	padding-left: 30px;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */
+
+
+</style>
+</head>
+<body>
+	Registratie formulier
+
+	<form method="get" name="frmRegistreer" id="frmRegistreer">
+	<p>Hier kan je een nieuwe account registreren.</p>
+	<div class="left">
+	<p><label>Naam: </label></p>
+
+	<p><label>Voornaam: </label></p>
+
+	<p><label>Geboortedatum: </label></p>
+
+	<p><label>Email: </label></p>
+
+	<p><label>Nickname: </label></p>
+
+	<p><label>Profielfoto: </label></p>
+
+	<p><label>Beroep: </label></p>
+
+	<p><label>Geslacht: </label></p>
+
+	<p>Seksuele voorkeur:</p>
+
+	<p><label>Oogkleur: </label></p>
+
+	<p><label>Haarkleur: </label></p>
+
+	<p><label>Gewicht: </label></p>
+
+	<p><label>Grootte: </label></p>
+
+	<p><label>Wachtwoord: </label></p>
+
+	<p><label>Herhaal Wachtwoord: </label></p>
+
+	<label>
+          <button type="submit" value="Versturen" id="registerBtn" >Register</button>
+    </label>
+    <label>
+          <input type="reset" value="Wissen" />
+    </label>
+	</div>
+	<div class="right">
+	<p><input type="text" class="required" name="Achternaam" id="achternaam"></p>
+	<p><input type="text" class="required" name="Voornaam" id="voornaam"></p>
+	<p><input type="date" class="volwassen" name="Geboortedatum" id="geboortedatum"></p>
+	<p><input type="email" class="required email" name="Email" id="email"></p>
+	<p><input type="text" name="Nickname" id="nickname"></p>
+	<p><button type="button" value="Kies foto" id="kiesPic" >Kies foto</button> <label id='labelFotoPath'></label></p>
+	<p><input type="text" name="Beroep" id="beroep"></p>
+	<p>
+		<label for="kiesMan">Man </label>
+		<input type="radio" name="kiesSexe" id="kiesMan" value="man" checked="checked"/>
+		<label for="kiesVr">Vrouw </label>
+		<input type="radio" name="kiesSexe" id="kiesVrouw" value="vrouw" />
+	</p>
+	<p>
+		<label for="Hetero">Hetero </label>
+		<input type="radio" name="sexvoorkeur" id="kiesHetero" value="hetero" checked="checked"/>
+		<label for="Homo">Homo </label>
+		<input type="radio" name="sexvoorkeur" id="kiesHomo" value="homo" />
+		<label for="Biseksueel">Biseksueel </label>
+		<input type="radio" name="sexvoorkeur" id="kiesBiseksueel" value="biseksueel" />
+	</p>
+	<p><input type="text" class="required" name="Oogkleur" id="oogkleur"></p>
+	<p><input type="text" class="required" name="Haarkleur" id="haarkleur"></p>
+	<p><input type="number" class="required getal" name="Gewicht" id="gewicht"></p>
+	<p><input type="number" class="required getal" name="Grootte" id="grootte"></p>
+	<p><input type="password" class="required" name="Wachtwoord" id="paswoord"></p>
+  <p><input type="password" class="required" name="Wachtwoord" id="wachtwooord2"></p>
+
+
+	</div>
+	</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script async src="js/flexi_scrum_2.1.0.min.js"></script>
+
+<script defer src="js/valideer.js"></script>
+
+<script defer>
+
+		var aFotoUrlsM = ['man_1.png','man_2.png','man_6.png','man_7.png','man_8.png','man_9.png','man_10.png','man_11.png' ];
+		var aFotoUrlsV = ['woman_1.png', 'woman_6.png', 'woman_7.png', 'woman_8.png', 'woman_9.png', 'woman_10.png', 'woman_11.png', 'woman_12.png', 'woman_13.png'];
+		var profielFoto = '';
+
+    window.onload = function () {
+
+
+		//add eventlistener als je het 2de paswoord veld verlaat
+	/*	var ePaswoord = document.getElementById('wachtwoord2');
+		ePaswoord.addEventListener('blur', function(e){
+			valideerVeld(this);
+		});*/
+
+
+		//add eventlistener for foto te kiezen
+		var kiesPic = document.getElementById('kiesPic');
+		kiesPic.addEventListener('click', function(e){
+			var eFormRegistreer = document.getElementById('frmRegistreer');
+			if( document.getElementById('fotoSelectie')){
+				eFormRegistreer.removeChild(document.getElementById('fotoSelectie'));
+			}
+			var container = maakFotoOvezicht();
+			//console.log(container);
+			var eFormRegistreer = document.getElementById('frmRegistreer');
+			eFormRegistreer.appendChild(container);
+
+			});
+
+
+
+
+		var registerBtn = document.getElementById('registerBtn');
+		//Add eventlistener for registerBtn
+		registerBtn.addEventListener('click', function Register(e){
+
+
+
+			e.preventDefault();
+
+			var eFormRegistreer = document.querySelector('#frmRegistreer');
+
+			var bValidFrm = valideerForm(eFormRegistreer);
+			if( bValidFrm === true){
+				// als validatie ok is , registreer gebruiker
+				var userAchterNaam = document.getElementById('achternaam');
+				var userVoorNaam = document.getElementById('voornaam');
+				var userGeboorteDatum = document.getElementById('geboortedatum');
+				var userEmail = document.getElementById('email');
+				var userNickName = document.getElementById('nickname');
+				var userProfielFoto = document.getElementById('profielfoto');
+				var userBeroep = document.getElementById('beroep');
+				console.log(userBeroep.value);
+				var userMan = document.getElementById('kiesMan');
+				var userVrouw = document.getElementById('kiesVrouw');
+				var userHetero = document.getElementById('kiesHetero');
+				var userHomo = document.getElementById('kiesHomo');
+				var userBiseksueel = document.getElementById('kiesBiseksueel');
+				var userOogkleur = document.getElementById('oogkleur');
+				var userHaarkleur = document.getElementById('haarkleur');
+				var userGewicht = document.getElementById('gewicht');
+				var userGrootte = document.getElementById('grootte');
+				var userWachtwoord = document.getElementById('paswoord');
+
+
+				//check man/vrouw
+				if(userMan.checked){
+					userGeslacht = "m";
+				}
+				else if(userVrouw.checked){
+					userGeslacht = "v";
+				}
+				else{
+				alert('Fout bij kiezen geslacht');
+				}
+				//check seksvoorkeur
+				if(userHetero.checked){
+					userVoorkeur = "hetero";
+				}
+				else if(userHomo.checked){
+					userVoorkeur = "homo";
+				}
+				else if(userBiseksueel.checked){
+					userVoorkeur = "biseksueel";
+				}
+				else{
+				alert('Fout bij kiezen seksuele voorkeur');
+				}
+
+
+
+				var profile = {beroep: userBeroep.value, email: userEmail.value, familienaam: userAchterNaam.value, foto: profielFoto, geboortedatum:userGeboorteDatum.value, gewicht:userGewicht.value,
+				grootte:userGrootte.value, haarkleur:userHaarkleur.value, nickname:userNickName.value, oogkleur:userOogkleur.value, seksvoorkeur: userVoorkeur, sexe: userGeslacht, voornaam: userVoorNaam.value, wachtwoord:userWachtwoord.value};
+				console.log(profile);
+
+				//Push naar profielen array
+				//var aoProfielen = scrumlib.getAllProfiles();
+				var oProfile = scrumlib.createProfile(profile);
+
+				scrumlib.save();
+				console.log(scrumlib.getAllProfiles());
+				}
+			})
+		//functie die je de keuze geeft om een foto te selecteren
+		function maakFotoOvezicht (){
+				var man=document.getElementById('kiesMan');
+				var vrouw=document.getElementById('kiesVrouw');
+				var aFotoUrls = [];
+				if (man.checked){
+					aFotoUrls = aFotoUrlsM;
+					}
+				if (vrouw.checked){
+					aFotoUrls = aFotoUrlsV;
+					}
+
+				var containerFoto = document.createElement('div');
+				containerFoto.setAttribute('id','fotoSelectie');
+				containerFoto.setAttribute('class','clearFix');
+				//Voeg titel
+				var titel= document.createElement('h2');
+				titel.innerHTML='Kies een foto';
+				containerFoto.appendChild(titel);
+
+
+				for (var i=0; i < aFotoUrls.length;i++){
+					var path = aFotoUrls[i];
+					var path= 'img/'+ path;
+					var eLink = document.createElement('a');
+					eLink.href='';
+					eLink.setAttribute('width',150);
+					eLink.setAttribute('height',150);
+					eLink.addEventListener('click',function(e){
+						e.preventDefault();
+						var path= this.querySelector('img').getAttribute('src');
+						profielFoto=path;
+						var labelPath = document.getElementById('labelFotoPath');
+						labelPath.innerHTML= path;
+						//verwijder fotodiv
+						var eFormRegistreer = document.getElementById('frmRegistreer');
+						eFormRegistreer.removeChild(document.getElementById('fotoSelectie'));
+					});
+					var eFoto = document.createElement('img');
+					eFoto.setAttribute('src',path);
+					eFoto.setAttribute('width',150);
+					eFoto.setAttribute('height',150);
+					eLink.appendChild(eFoto);
+					containerFoto.appendChild(eLink);
+
+				}
+
+			return containerFoto;
+		}
+
+
+    }
+</script>
+
+</body>
+</html>

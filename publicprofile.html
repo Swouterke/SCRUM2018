@@ -25,46 +25,11 @@
 
 				var dfLijst = document.createDocumentFragment(); //document fragment maken om alle li elementen in te steken
 
-				var listId = document.createElement("li");
-				listId.id = "id";
-				listId.innerHTML = "ID: " + dataset[0]._id;
-				listId.style.display = "none";
-				dfLijst.appendChild(listId);
-
-				var listFamilienaam = document.createElement("li");
-				listFamilienaam.id = "familienaam";
-				listFamilienaam.innerHTML = "Familienaam: " + dataset[0].familienaam;
-				dfLijst.appendChild(listFamilienaam);
-
-				var listVoornaam = document.createElement("li");
-				listVoornaam.id = "voornaam";
-				listVoornaam.innerHTML = "Voornaam: " + dataset[0].voornaam;
-				dfLijst.appendChild(listVoornaam);
-
-				var listGeboortedatum = document.createElement("li");
-				listGeboortedatum.id = "geboortedatum";
-				listGeboortedatum.innerHTML = "Geboortedatum: " + dataset[0].geboortedatum;
-				dfLijst.appendChild(listGeboortedatum);
-
-				var listEmail = document.createElement("li");
-				listEmail.id = "email";
-				listEmail.innerHTML = "Email: " + dataset[0].email;
-				dfLijst.appendChild(listEmail);
-
+				//al de publieke properties tonen
 				var listNickname = document.createElement("li");
 				listNickname.id = "nickname";
 				listNickname.innerHTML = "Nickname: " + dataset[0].nickname;
 				dfLijst.appendChild(listNickname);
-
-				var listFoto = document.createElement("li");
-				listFoto.id = "foto";
-				listFoto.innerHTML = "Foto: ";
-				var img = document.createElement("img");
-				img.src = dataset[0].foto;
-				img.style.height = "100px";
-				img.style.width = "75px";
-				listFoto.appendChild(img);
-				dfLijst.appendChild(listFoto);
 
 				var listBeroep = document.createElement("li");
 				listBeroep.id = "beroep";
@@ -96,10 +61,47 @@
 				listGrootte.innerHTML = "Grootte: " + dataset[0].grootte + " cm";
 				dfLijst.appendChild(listGrootte);
 
-				var listWachtwoord = document.createElement("li");
+				//alle dingen die eventueel kunnen getoond worden in geval dat er lovecoins aanwezig zijn
+				var listId = document.createElement("li");
+				listId.id = "id";
+				listId.innerHTML = "ID: " + dataset[0]._id;
+				dfLijst.appendChild(listId);
+
+				var listFamilienaam = document.createElement("li");
+				listFamilienaam.id = "familienaam";
+				listFamilienaam.innerHTML = "Familienaam: " + dataset[0].familienaam;
+				dfLijst.appendChild(listFamilienaam);
+
+				var listVoornaam = document.createElement("li");
+				listVoornaam.id = "voornaam";
+				listVoornaam.innerHTML = "Voornaam: " + dataset[0].voornaam;
+				dfLijst.appendChild(listVoornaam);
+
+				var listGeboortedatum = document.createElement("li");
+				listGeboortedatum.id = "geboortedatum";
+				listGeboortedatum.innerHTML = "Geboortedatum: " + dataset[0].geboortedatum;
+				dfLijst.appendChild(listGeboortedatum);
+
+				var listEmail = document.createElement("li");
+				listEmail.id = "email";
+				listEmail.innerHTML = "Email: " + dataset[0].email;
+				dfLijst.appendChild(listEmail);
+
+				var listFoto = document.createElement("li");
+				listFoto.id = "foto";
+				listFoto.innerHTML = "Foto: ";
+				var img = document.createElement("img");
+				img.src = "flexidating/img/" + dataset[0].foto;
+				img.style.height = "100px";
+				img.style.width = "75px";
+				listFoto.appendChild(img);
+				dfLijst.appendChild(listFoto);
+
+
+				/*var listWachtwoord = document.createElement("li");
 				listWachtwoord.id = "wachtwoord";
 				listWachtwoord.innerHTML = "Wachtwoord: " + dataset[0].wachtwoord;
-				dfLijst.appendChild(listWachtwoord);
+				dfLijst.appendChild(listWachtwoord);*/
 
 				//sterrenbeeld berekenen en weergeven
 				var listSterrenbeeld = document.createElement("li");
@@ -117,7 +119,7 @@
 					listSexvoorkeur.innerHTML = "Sexvoorkeur: " + dataset[0].sexvoorkeur;
 					dfLijst.appendChild(listSexvoorkeur);
 				}
-
+				
 
 				list.appendChild(dfLijst);
 
@@ -132,6 +134,14 @@
 				buttonEdit.addEventListener('click', function (){
 					window.open ('editPage.html', '_self', false);
 				})
+
+				//button lovecoin meer info laten weergeven
+				var buttonLove = document.getElementById("lovecoin");
+				buttonLove.addEventListener('click', function (){
+					lovecoin = true;
+					console.log(lovecoin);
+					//window.location.reload(false);
+				})
     }
 
 
@@ -141,6 +151,7 @@
 <div id="controls" >
 	<button id="search" class="button">Search partners</button>
   <button id="edit" class="button">Edit</button>
+	<button id="lovecoin" class="button">Unlock info met lovecoins</button>
 </div>
 
 <!--container om alle proofielelementen weer te geven-->
